@@ -1,0 +1,249 @@
+{
+  "name": "shell-script",
+  "displayName": "Shell Scripts",
+  "description": "在側欄管理 bash script 清單（資料夾分組、備註、驗證、拖曳排序），一鍵在內建終端機互動執行。",
+  "version": "0.1.0",
+  "publisher": "workjerry",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lazyjerry/shell-script-ext.git"
+  },
+  "keywords": [
+    "shell",
+    "bash",
+    "script",
+    "terminal",
+    "runner"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "extensionKind": [
+    "ui"
+  ],
+  "icon": "resources/icon.png",
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "shellScripts",
+          "title": "Shell Scripts",
+          "icon": "resources/shell.svg"
+        }
+      ]
+    },
+    "views": {
+      "shellScripts": [
+        {
+          "id": "shellScripts.tree",
+          "name": "Scripts",
+          "icon": "resources/shell.svg",
+          "contextualTitle": "Shell Scripts"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "shellScripts.addScript",
+        "title": "新增 Script",
+        "category": "Shell Scripts",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "shellScripts.addFolder",
+        "title": "新增資料夾",
+        "category": "Shell Scripts",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "shellScripts.refresh",
+        "title": "刷新並驗證",
+        "category": "Shell Scripts",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "shellScripts.run",
+        "title": "執行 Script",
+        "category": "Shell Scripts",
+        "icon": {
+          "light": "resources/run-green.svg",
+          "dark": "resources/run-green.svg"
+        }
+      },
+      {
+        "command": "shellScripts.delete",
+        "title": "刪除",
+        "category": "Shell Scripts",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "shellScripts.editNote",
+        "title": "編輯備註",
+        "category": "Shell Scripts"
+      },
+      {
+        "command": "shellScripts.editPath",
+        "title": "編輯路徑",
+        "category": "Shell Scripts"
+      },
+      {
+        "command": "shellScripts.renameFolder",
+        "title": "改名",
+        "category": "Shell Scripts"
+      },
+      {
+        "command": "shellScripts.chooseDataFolder",
+        "title": "選擇保存位置",
+        "category": "Shell Scripts"
+      },
+      {
+        "command": "shellScripts.openDataFolder",
+        "title": "顯示保存資料夾",
+        "category": "Shell Scripts"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "shellScripts.addScript",
+          "when": "view == shellScripts.tree",
+          "group": "navigation@1"
+        },
+        {
+          "command": "shellScripts.addFolder",
+          "when": "view == shellScripts.tree",
+          "group": "navigation@2"
+        },
+        {
+          "command": "shellScripts.refresh",
+          "when": "view == shellScripts.tree",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "shellScripts.run",
+          "when": "view == shellScripts.tree && viewItem == script",
+          "group": "inline@1"
+        },
+        {
+          "command": "shellScripts.delete",
+          "when": "view == shellScripts.tree && viewItem =~ /^(script|folder)$/",
+          "group": "inline@2"
+        },
+        {
+          "command": "shellScripts.addScript",
+          "when": "view == shellScripts.tree && viewItem =~ /^(source-shared|source-private|folder)$/",
+          "group": "inline@3"
+        },
+        {
+          "command": "shellScripts.addFolder",
+          "when": "view == shellScripts.tree && viewItem =~ /^(source-shared|source-private|folder)$/",
+          "group": "inline@4"
+        },
+        {
+          "command": "shellScripts.editNote",
+          "when": "view == shellScripts.tree && viewItem == script",
+          "group": "1_edit@1"
+        },
+        {
+          "command": "shellScripts.editPath",
+          "when": "view == shellScripts.tree && viewItem == script",
+          "group": "1_edit@2"
+        },
+        {
+          "command": "shellScripts.renameFolder",
+          "when": "view == shellScripts.tree && viewItem == folder",
+          "group": "1_edit@1"
+        },
+        {
+          "command": "shellScripts.chooseDataFolder",
+          "when": "view == shellScripts.tree && viewItem =~ /^source-(shared|private)$/",
+          "group": "1_config@1"
+        },
+        {
+          "command": "shellScripts.openDataFolder",
+          "when": "view == shellScripts.tree && viewItem =~ /^source-(shared|private)$/",
+          "group": "1_config@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "shellScripts.run",
+          "when": "false"
+        },
+        {
+          "command": "shellScripts.delete",
+          "when": "false"
+        },
+        {
+          "command": "shellScripts.editNote",
+          "when": "false"
+        },
+        {
+          "command": "shellScripts.editPath",
+          "when": "false"
+        },
+        {
+          "command": "shellScripts.renameFolder",
+          "when": "false"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "shellScripts.tree",
+        "contents": "尚未登錄任何 script。\n[新增 Script](command:shellScripts.addScript)\n[新增資料夾](command:shellScripts.addFolder)\n可將清單保存到 Dropbox 等同步資料夾：\n[選擇保存位置](command:shellScripts.chooseDataFolder)"
+      }
+    ],
+    "configuration": {
+      "title": "Shell Scripts",
+      "properties": {
+        "shellScripts.dataFolder": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "共用資料夾：存放 scripts.json 清單（建議指向 Dropbox 等雲端同步資料夾以跨裝置共用）。空值時使用延伸模組專屬儲存空間。支援 ~/ 開頭。"
+        },
+        "shellScripts.privateDataFolder": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "私有資料夾：與共用資料夾完全隔離的第二份清單存放位置（適合放不同步的個人 script）。空值時使用延伸模組專屬儲存空間的 private 子資料夾。支援 ~/ 開頭，不可與共用資料夾相同路徑。"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p . --noEmit",
+    "build:extension": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --outfile=out/extension.js --sourcemap",
+    "build:tests": "tsc -p .",
+    "build": "npm run typecheck && npm run build:extension",
+    "vscode:prepublish": "npm run build",
+    "lint": "eslint .",
+    "test:unit": "npm run build:tests && mocha --ui tdd --timeout 10000 \"out/test/unit/**/*.test.js\"",
+    "test:integration": "node ./out/test/runTest.js",
+    "test": "npm run build && npm run test:unit && npm run test:integration",
+    "check": "npm run lint && npm run test",
+    "package:vsix": "npm run check && vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.6.0",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.0.0",
+    "glob": "^11.0.0",
+    "mocha": "^11.0.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.0.0"
+  }
+}
