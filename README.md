@@ -8,7 +8,7 @@
 - **共用／私有雙清單**：頂層固定兩個區段，各自對應一個保存資料夾。共用清單可指到 Dropbox 等雲端同步資料夾跨裝置共用；私有清單放不同步的個人 script。
 - **備註**：每個 script 可加備註，顯示在檔名後面作為標記。
 - **驗證**：刷新時檢查檔案存在、且為 bash 檔（副檔名 `.sh`/`.bash`，或第一行 shebang 含 `bash`/`sh`）；未通過的項目顯示警告圖示，hover 可見原因。
-- **執行**：script 項目上的綠色播放鍵在內建終端機執行 `bash '<path>'`；終端機可互動（`read`、TUI 都可用）。同一 script 重複執行會沿用同一個終端機。
+- **執行**：script 項目上的綠色播放鍵在內建終端機執行 `bash '<path>'`；終端機可互動（`read`、TUI 都可用）。同一 script 重複執行會沿用同一個終端機。預設終端機不是 bash／zsh／sh（例如 fish、PowerShell）時，改開一個直接以 bash 執行該 script 的終端機，script 結束後不留互動 shell。
 - **路徑支援 `~`**：手動輸入路徑可用 `~/` 開頭；家目錄下的路徑儲存與顯示一律收斂為 `~` 形式，方便多機同步。
 
 ## 使用方式
@@ -25,7 +25,7 @@
 | `shellScripts.dataFolder` | 共用清單保存資料夾；空值使用延伸模組儲存空間。支援 `~/` 開頭。 |
 | `shellScripts.privateDataFolder` | 私有清單保存資料夾；空值使用儲存空間的 `private/` 子目錄。不可與共用相同。 |
 
-兩個設定的 scope 是 `machine-overridable`：不同機器可各自設定本機路徑、共享同一朵雲端資料夾。
+兩個設定的 scope 是 `machine`：只能在使用者設定（User settings）設定，工作區的 `.vscode/settings.json` 無法覆寫，避免開啟來路不明的 repo 時清單被換掉；不同機器仍可各自設定本機路徑、共享同一朵雲端資料夾。延伸模組在未受信任（Restricted Mode）的工作區停用。
 
 ### 同步行為
 

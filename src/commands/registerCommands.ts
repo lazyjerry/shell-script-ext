@@ -8,7 +8,7 @@ import { addNode, removeNode, renameFolder, updateScript } from '../core/model/t
 import { contractHome, expandHome } from '../core/paths/homePath';
 import { validationMessage } from '../core/validate/validateScript';
 import type { DataFolderLayout } from '../storage/dataFolder';
-import { hasScriptsFile } from '../storage/dataFolder';
+import { hasScriptsFile, revealTarget } from '../storage/dataFolder';
 import type { DualScriptStore } from '../storage/dualStore';
 import type { ScriptRunner } from '../run/scriptRunner';
 import type { ScriptTreeProvider, TreeElement } from '../views/scriptTreeProvider';
@@ -326,6 +326,6 @@ export function registerCommands(context: vscode.ExtensionContext, deps: Command
     if (!source) {
       return;
     }
-    void vscode.env.openExternal(vscode.Uri.file(getLayout(source).root));
+    await vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(revealTarget(getLayout(source).root)));
   });
 }

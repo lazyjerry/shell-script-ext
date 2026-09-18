@@ -5,6 +5,7 @@ import * as path from 'node:path';
 
 import * as vscode from 'vscode';
 
+import { isPosixShell } from '../../src/core/shell/quote';
 import type { ShellScriptsApi } from '../../src/extension';
 
 suite('Shell Scripts 延伸模組', () => {
@@ -98,5 +99,31 @@ suite('Shell Scripts 延伸模組', () => {
     const validation = api.getStore().getValidation('s2'); // /tmp/backup.sh 不存在
     assert.ok(validation);
     assert.equal(validation.ok, false);
+  });
+
+  test('執行：依預設 shell 決定送字串或直接以 bash 執行，cwd 為 script 所在資料夾', async () => {
+    const extension = vscode.extensions.getExtension('workjerry.shell-script');
+    assert.ok(extension);
+    await extension.activate();
+
+    const scriptPath = path.join(dataDir, 'run me.sh');
+    fs.writeFileSync(scriptPath, 'echo ok\n');
+    const node = { kind: 'script', id: 's-run', label: 'run me.sh', path: scriptPath };
+    await vscode.commands.executeCommand('shellScripts.run', { type: 'node', source: 'shared', node });
+
+    const terminal = vscode.window.terminals.find((t) => t.name === '▶ run me.sh');
+    assert.ok(terminal, '未建立終端機');
+    try {
+      const options = terminal.creationOptions as vscode.TerminalOptions;
+      assert.equal(options.cwd, dataDir);
+      if (isPosixShell(vscode.env.shell)) {
+        assert.equal(options.shellPath, undefined);
+      } else {
+        assert.equal(options.shellPath, 'bash');
+        assert.deepEqual(options.shellArgs, [scriptPath]);
+      }
+    } finally {
+      terminal.dispose();
+    }
   });
 });
