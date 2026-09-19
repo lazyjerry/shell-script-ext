@@ -2,6 +2,13 @@
 
 本檔格式依 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.1.0/)，版本號依 [Semantic Versioning](https://semver.org/lang/zh-TW/)。
 
+## [0.1.2] - 2026-09-19
+
+### Changed
+
+- README 的開發段落移除只適用於作者本機環境的步驟。
+- 0.1.1 未上架 Marketplace，其變更一併隨本版發布。
+
 ## [0.1.1] - 2026-09-19
 
 ### Security
@@ -20,5 +27,6 @@
 - 檔案存在與 bash 檔驗證，未通過顯示警告圖示。
 - 綠色播放鍵在內建終端機以 `bash '<path>'` 互動執行，同一 script 沿用同一個終端機。
 
+[0.1.2]: https://github.com/lazyjerry/shell-script-ext/compare/v0.1.0...v0.1.2
 [0.1.1]: https://github.com/lazyjerry/shell-script-ext/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/lazyjerry/shell-script-ext/releases/tag/v0.1.0

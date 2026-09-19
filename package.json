@@ -2,7 +2,7 @@
   "name": "shell-script",
   "displayName": "Shell Scripts",
   "description": "在側欄管理 bash script 清單（資料夾分組、備註、驗證、拖曳排序），一鍵在內建終端機互動執行。",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "workjerry",
   "license": "Apache-2.0",
   "repository": {
